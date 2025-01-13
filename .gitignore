@@ -1,0 +1,47 @@
+# Ignore XAMPP specific files
+*.log
+*.pid
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore editor and IDE files
+.vscode/
+.idea/
+
+# Ignore node_modules if using npm for frontend packages
+node_modules/
+
+# Ignore build or compiled files
+dist/
+build/
+
+# Ignore temporary files
+*.tmp
+*.temp
+*.swp
+*.bak
+
+# Ignore configuration files containing sensitive information
+.env
+.env.local
+.env.*.local
+
+# Ignore compiled CSS or preprocessor output (e.g., SCSS)
+*.sass-cache/
+*.scss-cache/
+
+# Ignore XAMPP htdocs folder except your project
+htdocs/*
+!htdocs/your-project-folder/
+
+# Ignore user uploads if any
+uploads/
+
+# Ignore generated documentation
+docs/
+
+# Ignore debug or test files
+test/
+coverage/
