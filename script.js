@@ -71,7 +71,7 @@ function displayPizzas(groupedPizzas) {
         const PizzaEdit = document.createElement('button');
         PizzaEdit.className = 'Edit_Button';
         PizzaEdit.textContent = 'Edit';
-        PizzaEdit.addEventListener('click', () => {
+        PizzaEdit.addEventListener('click', (e) => {
 
             const editPizza = {
                 ingredients: pizza.ingredients,
@@ -79,6 +79,8 @@ function displayPizzas(groupedPizzas) {
 
             const editFlex = document.createElement('div');
             editFlex.style.position = "absolute";
+            editFlex.style.top = e.y;
+            editFlex.style.left = e.x;
             editFlex.style.width = "100vw";
             editFlex.style.display = "flex";
             editFlex.style.flexDirection = "column";
