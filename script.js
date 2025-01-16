@@ -9,7 +9,7 @@ let ingredients = [];
 
 async function fetchPizzaData() {
     try {
-        const response = await fetch('http://192.168.126.9:5177/api/Pizza/GetAllPizzas', {
+        const response = await fetch('http://localhost:5177/api/Pizza/GetAllPizzas', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         });
@@ -214,7 +214,7 @@ function updateOrderSummary() {
 }
 
 async function submitOrder() {
-    const apiEndpoint = 'http://192.168.126.9:5177/api/order/create';
+    const apiEndpoint = 'http://localhost:5177/api/order/create';
 
     console.log(order.items);
     const orderData = order.items.map((item, index) => ({
