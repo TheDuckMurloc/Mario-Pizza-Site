@@ -20,7 +20,7 @@ async function fetchPizzaData() {
         const data = await response.json();
         const fetchedPizzas = data.pizzas;
         ingredients = data.ingredients;
-        console.log('Fetched pizzas:', fetchedPizzas);
+        // console.log('Fetched pizzas:', fetchedPizzas);
 
         if (Array.isArray(fetchedPizzas)) {
             const groupedPizzas = groupPizzasByName(fetchedPizzas);
@@ -61,7 +61,7 @@ function displayPizzas(groupedPizzas) {
     const menuContainer = document.getElementById('menu-container');
     menuContainer.innerHTML = '';
     
-    console.log(groupedPizzas);
+    // console.log(groupedPizzas);
     groupedPizzas.forEach((pizza) => {
         const pizzaDiv = document.createElement('div');
         pizzaDiv.className = 'pizza-item';
@@ -97,7 +97,7 @@ function displayPizzas(groupedPizzas) {
                 ingredientCheckbox.value = JSON.stringify(ingredient);
                 ingredientCheckbox.type = "checkbox";
                 editPizza.ingredients.forEach(pizzaIngredient => {
-                    console.log(pizzaIngredient);
+                    // console.log(pizzaIngredient);
                     if (pizzaIngredient.id == ingredient.id)
                     {
                         ingredientCheckbox.checked = true;
@@ -115,7 +115,7 @@ function displayPizzas(groupedPizzas) {
             addEditedButton.innerHTML = "Add to Order";
             addEditedButton.addEventListener('click', () => {  
             const sizeOption = sizeSelect.options[sizeSelect.selectedIndex];
-            console.log(sizeOption);
+            // console.log(sizeOption);
             const pizzaSize = sizeOption.text.split(' - ')[0];
             const pizzaPrice = parseFloat(sizeOption.value);
             const sizeId = sizeOption.getAttribute('data-size-id');
@@ -131,7 +131,7 @@ function displayPizzas(groupedPizzas) {
                 ingredients: selectedIngredients,
                 size: { id: sizeId, name: pizzaSize }
             };
-            console.log(newPizza);
+            // console.log(newPizza);
             order.items.push(newPizza);
             updateOrderSummary();
                 editFlex.remove();
@@ -167,7 +167,7 @@ function displayPizzas(groupedPizzas) {
         addButton.textContent = 'Add to Order';
         addButton.addEventListener('click', () => {
             const sizeOption = sizeSelect.options[sizeSelect.selectedIndex];
-            console.log(sizeOption);
+            // console.log(sizeOption);
             const pizzaSize = sizeOption.text.split(' - ')[0];
             const pizzaPrice = parseFloat(sizeOption.value);
             const sizeId = sizeOption.getAttribute('data-size-id');
@@ -178,7 +178,7 @@ function displayPizzas(groupedPizzas) {
                 ingredients: pizza.ingredients,
                 size: {id: sizeId, name: pizzaSize}
             };
-            console.log(newPizza);
+            // console.log(newPizza);
             order.items.push(newPizza);
             updateOrderSummary();
         });
@@ -196,7 +196,7 @@ function updateOrderSummary() {
     RemovePizzaButton.className = 'remove_pizza'    ;
     RemovePizzaButton.textContent = 'Remove';
    
-    console.log(order);
+    // console.log(order);
     const orderList = document.getElementById('order-list');
     const totalPriceElem = document.getElementById('total-price');
     orderList.innerHTML = '';
@@ -216,7 +216,7 @@ function updateOrderSummary() {
 async function submitOrder() {
     const apiEndpoint = 'http://192.168.126.9:5177/api/order/create';
 
-    console.log(order.items);
+    // console.log(order.items);
     const orderData = order.items.map((item, index) => ({
         ID: item.id,
         Name: item.name,
@@ -225,7 +225,7 @@ async function submitOrder() {
         Size: item.size
     }));
 
-    console.log('Submitting order:', JSON.stringify(orderData, null, 2));
+    // console.log('Submitting order:', JSON.stringify(orderData, null, 2));
 
     try {
         const response = await fetch(apiEndpoint, {
