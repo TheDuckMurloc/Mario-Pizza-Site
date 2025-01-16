@@ -20,7 +20,7 @@ async function fetchPizzaData() {
         const data = await response.json();
         const fetchedPizzas = data.pizzas;
         ingredients = data.ingredients;
-        console.log('Fetched pizzas:', fetchedPizzas);
+        // console.log('Fetched pizzas:', fetchedPizzas);
 
         if (Array.isArray(fetchedPizzas)) {
             const groupedPizzas = groupPizzasByName(fetchedPizzas);
@@ -60,8 +60,8 @@ function groupPizzasByName(pizzas) {
 function displayPizzas(groupedPizzas) {
     const menuContainer = document.getElementById('menu-container');
     menuContainer.innerHTML = '';
-    
-    console.log(groupedPizzas);
+
+    // console.log(groupedPizzas);
     groupedPizzas.forEach((pizza) => {
         const pizzaDiv = document.createElement('div');
         pizzaDiv.className = 'pizza-item';
@@ -71,7 +71,7 @@ function displayPizzas(groupedPizzas) {
         const PizzaEdit = document.createElement('button');
         PizzaEdit.className = 'Edit_Button';
         PizzaEdit.textContent = 'Edit';
-        PizzaEdit.addEventListener('click', () => {
+        PizzaEdit.addEventListener('click', (e) => {
 
             const editPizza = {
                 ingredients: pizza.ingredients,
@@ -79,6 +79,8 @@ function displayPizzas(groupedPizzas) {
 
             const editFlex = document.createElement('div');
             editFlex.style.position = "absolute";
+            editFlex.style.top = e.y;
+            editFlex.style.left = e.x;
             editFlex.style.width = "100vw";
             editFlex.style.display = "flex";
             editFlex.style.flexDirection = "column";
@@ -90,16 +92,15 @@ function displayPizzas(groupedPizzas) {
             EditPopup.style.maxWidth = "40vw";
             EditPopup.style.height = "auto";
             EditPopup.style.backgroundColor = "grey";
-            
+
             ingredients.forEach(ingredient => {
                 const ingredientCheckbox = document.createElement("input");
                 ingredientCheckbox.className = "ingredient-checkbox";
                 ingredientCheckbox.value = JSON.stringify(ingredient);
                 ingredientCheckbox.type = "checkbox";
                 editPizza.ingredients.forEach(pizzaIngredient => {
-                    console.log(pizzaIngredient);
-                    if (pizzaIngredient.id == ingredient.id)
-                    {
+                    // console.log(pizzaIngredient);
+                    if (pizzaIngredient.id == ingredient.id) {
                         ingredientCheckbox.checked = true;
                     }
                 });
@@ -113,34 +114,34 @@ function displayPizzas(groupedPizzas) {
             const addEditedButton = document.createElement("button");
             addEditedButton.classname = "add-to-order";
             addEditedButton.innerHTML = "Add to Order";
-            addEditedButton.addEventListener('click', () => {  
-            const sizeOption = sizeSelect.options[sizeSelect.selectedIndex];
-            console.log(sizeOption);
-            const pizzaSize = sizeOption.text.split(' - ')[0];
-            const pizzaPrice = parseFloat(sizeOption.value);
-            const sizeId = sizeOption.getAttribute('data-size-id');
+            addEditedButton.addEventListener('click', () => {
+                const sizeOption = sizeSelect.options[sizeSelect.selectedIndex];
+                // console.log(sizeOption);
+                const pizzaSize = sizeOption.text.split(' - ')[0];
+                const pizzaPrice = parseFloat(sizeOption.value);
+                const sizeId = sizeOption.getAttribute('data-size-id');
 
-            const selectedIngredients = Array.from(document.getElementsByClassName("ingredient-checkbox"))
-            .filter(checkbox => checkbox.checked)
-            .map(checkbox => JSON.parse(checkbox.value));
-            
-            const newPizza = {
-                id: pizza.id + parseFloat(sizeId) - 1,
-                name: pizza.name,
-                price: pizza.basePrice + parseFloat(sizeId) - 1,
-                ingredients: selectedIngredients,
-                size: { id: sizeId, name: pizzaSize }
-            };
-            console.log(newPizza);
-            order.items.push(newPizza);
-            updateOrderSummary();
+                const selectedIngredients = Array.from(document.getElementsByClassName("ingredient-checkbox"))
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => JSON.parse(checkbox.value));
+
+                const newPizza = {
+                    id: pizza.id + parseFloat(sizeId) - 1,
+                    name: pizza.name,
+                    price: pizza.basePrice + parseFloat(sizeId) - 1,
+                    ingredients: selectedIngredients,
+                    size: { id: sizeId, name: pizzaSize }
+                };
+                // console.log(newPizza);
+                order.items.push(newPizza);
+                updateOrderSummary();
                 editFlex.remove();
             })
             const EditClose = document.createElement('button');
             EditClose.classname = "close-edit";
             EditClose.innerHTML = "Close";
-            EditClose.addEventListener('click', () =>{
-              editFlex.remove();
+            EditClose.addEventListener('click', () => {
+                editFlex.remove();
             })
 
             EditPopup.appendChild(addEditedButton);
@@ -167,22 +168,22 @@ function displayPizzas(groupedPizzas) {
         addButton.textContent = 'Add to Order';
         addButton.addEventListener('click', () => {
             const sizeOption = sizeSelect.options[sizeSelect.selectedIndex];
-            console.log(sizeOption);
+            // console.log(sizeOption);
             const pizzaSize = sizeOption.text.split(' - ')[0];
             const pizzaPrice = parseFloat(sizeOption.value);
             const sizeId = sizeOption.getAttribute('data-size-id');
             const newPizza = {
-                id: pizza.id + parseFloat(sizeId) -1,
+                id: pizza.id + parseFloat(sizeId) - 1,
                 name: pizza.name,
-                price: pizza.basePrice + parseFloat(sizeId) -1,
+                price: pizza.basePrice + parseFloat(sizeId) - 1,
                 ingredients: pizza.ingredients,
-                size: {id: sizeId, name: pizzaSize}
+                size: { id: sizeId, name: pizzaSize }
             };
-            console.log(newPizza);
+            // console.log(newPizza);
             order.items.push(newPizza);
             updateOrderSummary();
         });
-        
+
 
         pizzaDiv.appendChild(addButton);
         menuContainer.appendChild(pizzaDiv);
@@ -193,17 +194,17 @@ function displayPizzas(groupedPizzas) {
 
 function updateOrderSummary() {
     const RemovePizzaButton = document.createElement('button');
-    RemovePizzaButton.className = 'remove_pizza'    ;
+    RemovePizzaButton.className = 'remove_pizza';
     RemovePizzaButton.textContent = 'Remove';
-   
-    console.log(order);
+
+    // console.log(order);
     const orderList = document.getElementById('order-list');
     const totalPriceElem = document.getElementById('total-price');
     orderList.innerHTML = '';
     order.items.forEach((pizza, index) => {
         RemovePizzaButton.addEventListener('click', () => {
-        order.items.splice(index, 1);
-        updateOrderSummary();
+            order.items.splice(index, 1);
+            updateOrderSummary();
         })
         const listItem = document.createElement('li');
         listItem.textContent = `${pizza.name} (${pizza.size.name}) - €${pizza.price.toFixed(2)} - Ingredients: ${pizza.ingredients.map(ingredient => ingredient.name).join(', ')}`;
@@ -216,7 +217,7 @@ function updateOrderSummary() {
 async function submitOrder() {
     const apiEndpoint = 'http://localhost:5177/api/order/create';
 
-    console.log(order.items);
+    // console.log(order.items);
     const orderData = order.items.map((item, index) => ({
         ID: item.id,
         Name: item.name,
@@ -225,7 +226,7 @@ async function submitOrder() {
         Size: item.size
     }));
 
-    console.log('Submitting order:', JSON.stringify(orderData, null, 2));
+    // console.log('Submitting order:', JSON.stringify(orderData, null, 2));
 
     try {
         const response = await fetch(apiEndpoint, {
@@ -253,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchPizzaData();
     const checkoutButton = document.getElementById('checkout-btn');
     checkoutButton.addEventListener('click', (e) => {
-        e.preventDefault(); 
-        submitOrder(); 
+        e.preventDefault();
+        submitOrder();
     });
 });
